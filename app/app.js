@@ -64,4 +64,24 @@ app.post('/api/v1/projects', async (request, response) => {
   }
 })
 
+app.post('/api/v1/palettes', async (request, response) => {
+  const palette = request.body;
+
+  for (let requiredParameter of ['name', 'color1', 'color2', 'color3', 'color4', 'color5',]) {
+    if (!palette[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { name: <string>, color1, <string>, color2, <string>, color3, <string>, color4, <string>, color5, <string>, }. You are missing a ${requiredParameter} property.` })
+    }
+  }
+
+  const insertedPalette = await database('palettes').insert(palette, 'id');
+
+  if (insertedPalette) {
+    return response.status(201).json({ id: insertedPalette[0] });
+  } else {
+    return response.status(422).json({ error: 'Failed to post palette' })
+  }
+})
+
 module.exports = app;
