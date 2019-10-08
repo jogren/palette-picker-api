@@ -12,8 +12,10 @@ app.get('/', (request, response) => {
   response.send('Welcome to Palette Picker');
 });
 
-app.get('/api/v1/projects', (request, response) => {
-  console.log('return all projects')
+app.get('/api/v1/projects', async (request, response) => {
+  const projects = await database('projects').select();
+
+  return response.status(200).json(projects);
 });
 
 module.exports = app;
