@@ -34,6 +34,12 @@ app.get('/api/v1/palettes', async (request, response) => {
   return response.status(200).json(palettes);
 });
 
+app.get('/api/v1/palettes/:id', async (request, response) => {
+  const palette = await database('palettes').where('id', request.params.id).select();
 
+  if (palette.length) {
+    return response.status(200).json(palette);
+  } 
+});
 
 module.exports = app;
