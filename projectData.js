@@ -1,4 +1,4 @@
-const seedData = [
+const projectData = [
   {
     name: 'Winter',
     palettes: [
