@@ -146,4 +146,22 @@ describe('Server', () => {
       expect(res.body.error).toEqual('Expected format: { name: <string>, color1, <string>, color2, <string>, color3, <string>, color4, <string>, color5, <string>, }. You are missing a color2 property.')
     });
   });
+
+  describe('PATCH /api/v1/projects/:id', () => {
+    it('should return a 204 and updated the project', async () => {
+      const updatedInfo = {
+        name: 'Summer'
+      }
+      const targetProject = await database('projects').first();
+      const mockId = targetProject.id;
+
+      const res = await request(app).patch(`/api/v1/projects/${mockId}`);
+      const expectedProject = await database('projects').where('id', mockId);
+
+      expect(res.status).toBe(204);
+      expect(expectedProject.name).toEqual(updatedInfo.name)
+
+
+    });
+  });
 });
