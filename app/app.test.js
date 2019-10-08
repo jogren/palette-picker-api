@@ -17,7 +17,7 @@ describe('Server', () => {
     });
   });
 
-  describe('/api/v1/projects', () => {
+  describe('GET /api/v1/projects', () => {
     it('should return a 200 and all of the projects', async () => {
       const expectedProjects = await database('projects').select();
 
@@ -31,7 +31,20 @@ describe('Server', () => {
     });
   });
 
-  describe('/api/v1/palettes', () => {
+  describe('GET /api/v1/projects/:id', () => {
+    it('should return a 200 and a specific project', async () => {
+      const expectedProject = await database('projects').first();
+      const id = expectedProject.id;
+
+      const res = await request(app).get(`/api/v1/projects/${id}`);
+      const result = res.body[0];
+
+      expect(res.status).toBe(200);
+      expect(JSON.stringify(result)).toEqual(JSON.stringify(expectedProject));
+    });
+  });
+
+  describe('GET /api/v1/palettes', () => {
     it('should return a 200 and all of the palettes', async () => {
       const expectedPalettes = await database('palettes').select();
 
