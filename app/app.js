@@ -51,7 +51,7 @@ app.post('/api/v1/projects', async (request, response) => {
     if (!project[requiredParameter]) {
       return response
         .status(422)
-        .send({ error: `Expected format: { name: <string> }. You are missing a name property.` })
+        .send({ error: `Expected format: { name: <string> }. You are missing a ${requiredParameter} property.` })
     } 
   }
 
