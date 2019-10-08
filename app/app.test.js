@@ -88,4 +88,18 @@ describe('Server', () => {
       expect(res.body.error).toEqual("Could not find id of -1.");
     });
   });
+
+  describe('POST /api/v1/projects', () => {
+    it('should return a 200 and add a new project to the table', async () => {
+      const newProject = { name: 'Winter Palettes' };
+
+      const res = await request(app).post('/api/v1/projects').send(newProject);
+
+      const projects = await database('projects').where('id', res.body.id).select();
+      const project = projects[0];
+
+      expect(res.status).toBe(201);
+      expect(project.name).toEqual(newProject.name)
+    });
+  });
 });
