@@ -109,6 +109,41 @@ describe('Server', () => {
 
       expect(res.status).toBe(422);
       expect(res.body.error).toEqual('Expected format: { name: <string> }. You are missing a name property.')
-      })
     });
+  });
+
+  describe('POST /api/v1/palettes', () => {
+    it('should return a 200 and add a new palette to the table', async () => {
+      const newPalette = { 
+        name: 'Christmas Theme', 
+        color1: '#FFFFFF', 
+        color2: '#FFFFFF',
+        color3: '#FFFFFF',
+        color4: '#FFFFFF',
+        color5: '#FFFFFF'
+      };
+
+      const res = await request(app).post('/api/v1/palettes').send(newPalette);
+
+      const palettes = await database('palettes').where('id', res.body.id).select();
+      const palette = palettes[0];
+
+      expect(res.status).toBe(201);
+      expect(palette.name).toEqual(newPalette.name)
+    });
+
+    it('should return a 422 and a message when missing parameter', async () => {
+      const newPalette = {
+        name: 'Christmas Theme',
+        color1: '#FFFFFF',
+        color3: '#FFFFFF',
+        color4: '#FFFFFF',
+        color5: '#FFFFFF'
+      };
+      const res = await request(app).post('/api/v1/palettes').send(newPalette);
+
+      expect(res.status).toBe(422);
+      expect(res.body.error).toEqual('Expected format: { name: <string>, color1, <string>, color2, <string>, color3, <string>, color4, <string>, color5, <string>, }. You are missing a color2 property.')
+    });
+  });
 });
