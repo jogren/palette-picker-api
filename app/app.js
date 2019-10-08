@@ -18,4 +18,10 @@ app.get('/api/v1/projects', async (request, response) => {
   return response.status(200).json(projects);
 });
 
+app.get('/api/v1/palettes', async (request, response) => {
+  const palettes = await database('palettes').select();
+
+  return response.status(200).json(palettes);
+});
+
 module.exports = app;

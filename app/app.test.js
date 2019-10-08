@@ -22,10 +22,26 @@ describe('Server', () => {
       const expectedProjects = await database('projects').select();
 
       const res = await request(app).get('/api/v1/projects');
+
+      const response = JSON.stringify(res.body)
       const projects = JSON.stringify(expectedProjects)
 
       expect(res.status).toBe(200);
-      expect(JSON.stringify(res.body)).toEqual(projects)
-    })
-  })
-})
+      expect(response).toEqual(projects)
+    });
+  });
+
+  describe('/api/v1/palettes', () => {
+    it('should return a 200 and all of the palettes', async () => {
+      const expectedPalettes = await database('palettes').select();
+
+      const res = await request(app).get('/api/v1/palettes');
+
+      const response = JSON.stringify(res.body)
+      const palettes = JSON.stringify(expectedPalettes)
+
+      expect(res.status).toBe(200);
+      expect(response).toEqual(palettes)
+    });
+  });
+});
