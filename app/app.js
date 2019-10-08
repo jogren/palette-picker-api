@@ -44,4 +44,24 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
   }
 });
 
+app.post('/api/v1/projects', async (request, response) => {
+  const project = request.body;
+
+  for (let requiredParameter of ['name']) {
+    if (!project[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { name: <string> }. You are missing a name property.` })
+    } 
+  }
+
+  const insertedProject = await database('projects').insert(project, 'id');
+
+  if (insertedProject) {
+    return response.status(201).json({ id: insertedProject[0] });
+  } else {
+    return response.status(422).json({ error: 'Failed to post project' })
+  }
+})
+
 module.exports = app;
