@@ -39,7 +39,9 @@ app.get('/api/v1/palettes/:id', async (request, response) => {
 
   if (palette.length) {
     return response.status(200).json(palette);
-  } 
+  } else {
+    return response.status(404).json({ error: `Could not find id of ${request.params.id}.` })
+  }
 });
 
 module.exports = app;

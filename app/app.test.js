@@ -78,5 +78,14 @@ describe('Server', () => {
       expect(res.status).toBe(200);
       expect(JSON.stringify(result)).toEqual(JSON.stringify(expectedProject));
     });
+
+    it('should return a 404 and an error message', async () => {
+      const wrongId = -1;
+
+      const res = await request(app).get(`/api/v1/palettes/${wrongId}`);
+
+      expect(res.status).toBe(404);
+      expect(res.body.error).toEqual("Could not find id of -1.");
+    });
   });
 });
