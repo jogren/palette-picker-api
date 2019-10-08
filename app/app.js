@@ -23,6 +23,8 @@ app.get('/api/v1/projects/:id', async (request, response) => {
 
   if(project.length) {
     return response.status(200).json(project);
+  } else {
+    return response.status(404).json({error: `Could not find id of ${request.params.id}.`})
   }
 });
 
