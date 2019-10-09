@@ -152,16 +152,15 @@ describe('Server', () => {
       const updatedInfo = {
         name: 'Summer'
       }
+
       const targetProject = await database('projects').first();
       const mockId = targetProject.id;
-
-      const res = await request(app).patch(`/api/v1/projects/${mockId}`);
+      
+      const res = await request(app).patch(`/api/v1/projects/${mockId}`).send(updatedInfo);
       const expectedProject = await database('projects').where('id', mockId);
 
-      expect(res.status).toBe(204);
-      expect(expectedProject.name).toEqual(updatedInfo.name)
-
-
+      expect(res.status).toBe(202);
+      expect(expectedProject[0].name).toEqual(updatedInfo.name)
     });
   });
 });
