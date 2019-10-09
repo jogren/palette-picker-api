@@ -209,4 +209,16 @@ describe('Server', () => {
       expect(res.body.error).toEqual('Could not find project with id of -1')
     });
   });
+
+  describe('DELETE /api/v1/projects/:id', () => {
+    it('should return a 200 and a message', async () => {
+      const targetProject = await database('projects').first();
+      const mockId = targetProject.id;
+
+      const res = await request(app).delete(`/api/v1/projects/${mockId}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(`The project with id ${mockId} and all of its palettes have been removed.`)
+    });
+  });
 });

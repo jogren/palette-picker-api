@@ -113,4 +113,15 @@ app.patch('/api/v1/palettes/:id', async (request, response) => {
   }
 });
 
+app.delete('/api/v1/projects/:id', async (request, response) => {
+  const project = await database('projects').where('id', request.params.id).select();
+  
+  if(project.length) {
+    await database('palettes').where('project_id', request.params.id).del()
+    await database('projects').where('id', request.params.id).del()
+    
+    response.status(200).json(`The project with id ${request.params.id} and all of its palettes have been removed.`)
+  }
+})
+
 module.exports = app;
