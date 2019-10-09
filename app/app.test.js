@@ -164,15 +164,34 @@ describe('Server', () => {
     });
 
     it('should return a 400 and an error message', async () => {
-      const inValidInfo = {
+      const updatedInfo = {
         name: 'Summer'
       };
       const invalidId = -1;
 
-      const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send(inValidInfo);
+      const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send(updatedInfo);
 
       expect(res.status).toBe(400);
       expect(res.body.error).toEqual('Could not find project with id of -1')
+    });
+  });
+
+  describe('PATCH /api/v1/palettes/:id', () => {
+    it('should return a 204 and updated the palette', async () => {
+      const updatedInfo = {
+        name: 'Fourth of July',
+        color2: '#1261A0',
+        color3: '#FF6347' 
+      }
+
+      const targetPalette = await database('palettes').first();
+      const mockId = targetPalette.id;
+
+      const res = await request(app).patch(`/api/v1/palettes/${mockId}`).send(updatedInfo);
+      const expectedPalette = await database('palettes').where('id', mockId);
+
+      expect(res.status).toBe(202);
+      expect(expectedPalette[0].name).toEqual(updatedInfo.name)
     });
   });
 });

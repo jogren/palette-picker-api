@@ -97,6 +97,20 @@ app.patch('/api/v1/projects/:id', async (request, response) => {
   } else {
     return response.status(400).json({ error: `Could not find project with id of ${request.params.id}` })
   }
-})
+});
+
+app.patch('/api/v1/palettes/:id', async (request, response) => {
+  const paletteChanges = request.body;
+  const palette = await database('palettes').where('id', request.params.id).select();
+
+  if (palette.length) {
+    await database('palettes')
+      .where('id', request.params.id)
+      .update(paletteChanges)
+    return response.status(202).json({ id: request.params.id })
+  } else {
+    return response.status(400).json({ error: `Could not find palette with id of ${request.params.id}` })
+  }
+});
 
 module.exports = app;
