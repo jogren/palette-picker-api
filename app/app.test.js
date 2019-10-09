@@ -76,6 +76,14 @@ describe('Server', () => {
       expect(res.status).toBe(200);
       expect(res.body.name).toEqual(paletteName)
     })
+
+    it('should return a 404 and an error message', async () => {
+      const res = await request(app).get('/api/v1/palettes?name=test');
+
+      expect(res.status).toBe(404);
+      expect(res.body.error).toEqual('That palette does not exist.')
+
+    })
   });
 
   describe('GET /api/v1/palettes/:id', () => {
