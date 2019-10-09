@@ -28,10 +28,32 @@ app.get('/api/v1/projects/:id', async (request, response) => {
   }
 });
 
+// app.get('/api/v1/palettes', async (request, response) => {
+//   const { name } = request.query;
+//   console.log(name)
+//   if(name) {
+//     const queriedPalette = await database('palettes').where('name', name).select();
+//     console.log(queriedPalette)
+//     return response.status(200).json(queriedPalette[0])
+//   } else {
+//     const palettes = await database('palettes').select();
+//     return response.status(200).json(palettes);
+//   }
+// });
+
 app.get('/api/v1/palettes', async (request, response) => {
   const palettes = await database('palettes').select();
-
-  return response.status(200).json(palettes);
+  const { name } = request.query;
+  if (name) {
+    const queriedPalette = await database('palettes').where('name', 'like', `%${name}%`).select();
+    console.log(queriedPalette)
+    if (queriedPalette.length) {
+      return response.status(200).json(queriedPalette[0])
+    } else {
+      return response.status(404).json({ error: 'That palette does not exist.' })
+    }
+  }
+    return response.status(200).json(palettes);
 });
 
 app.get('/api/v1/palettes/:id', async (request, response) => {

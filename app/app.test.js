@@ -65,6 +65,17 @@ describe('Server', () => {
       expect(res.status).toBe(200);
       expect(response).toEqual(palettes)
     });
+
+    it('should return a 200 and palette based on the query param provided', async () => {
+      const targetPalette = await database('palettes').first();
+      const paletteName = targetPalette.name;
+
+      const res = await request(app).get(`/api/v1/palettes?name=${paletteName}`);
+      console.log(res.body)
+
+      expect(res.status).toBe(200);
+      expect(res.body.name).toEqual(paletteName)
+    })
   });
 
   describe('GET /api/v1/palettes/:id', () => {
