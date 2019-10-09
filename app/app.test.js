@@ -162,5 +162,17 @@ describe('Server', () => {
       expect(res.status).toBe(202);
       expect(expectedProject[0].name).toEqual(updatedInfo.name)
     });
+
+    it('should return a 400 and an error message', async () => {
+      const inValidInfo = {
+        name: 'Summer'
+      };
+      const invalidId = -1;
+
+      const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send(inValidInfo);
+
+      expect(res.status).toBe(400);
+      expect(res.body.error).toEqual('Could not find project with id of -1')
+    });
   });
 });

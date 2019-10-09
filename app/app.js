@@ -86,12 +86,16 @@ app.post('/api/v1/palettes', async (request, response) => {
 
 app.patch('/api/v1/projects/:id', async (request, response) => {
   const projectChanges = request.body;
+  const project = await database('projects').where('id', request.params.id).select();
+
   
-  if (projectChanges.name) {
+  if (project.length) {
     await database('projects')
       .where('id', request.params.id)
       .update(projectChanges)
     return response.status(202).json({ id: request.params.id })
+  } else {
+    return response.status(400).json({ error: `Could not find project with id of ${request.params.id}` })
   }
 })
 
