@@ -84,4 +84,15 @@ app.post('/api/v1/palettes', async (request, response) => {
   }
 })
 
+app.patch('/api/v1/projects/:id', async (request, response) => {
+  const projectChanges = request.body;
+  
+  if (projectChanges.name) {
+    await database('projects')
+      .where('id', request.params.id)
+      .update(projectChanges)
+    return response.status(202).json({ id: request.params.id })
+  }
+})
+
 module.exports = app;
