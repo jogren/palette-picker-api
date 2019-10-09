@@ -121,6 +121,8 @@ app.delete('/api/v1/projects/:id', async (request, response) => {
     await database('projects').where('id', request.params.id).del()
     
     response.status(200).json(`The project with id ${request.params.id} and all of its palettes have been removed.`)
+  } else {
+    return response.status(400).json({ error: `Could not find project with id of ${request.params.id}` })
   }
 })
 
