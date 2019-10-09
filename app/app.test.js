@@ -230,4 +230,17 @@ describe('Server', () => {
       expect(res.body.error).toEqual('Could not find project with id of -1')
     });
   });
+
+  describe('DELETE /api/v1/palettes/:id', () => {
+    it('should return a 200 and a message', async () => {
+      const targetPalette = await database('palettes').first();
+      const mockId = targetPalette.id;
+
+      const res = await request(app).delete(`/api/v1/palettes/${mockId}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual(`The palette with id ${mockId} has been removed.`)
+    });
+
+  });
 });
