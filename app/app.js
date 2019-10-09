@@ -133,7 +133,9 @@ app.delete('/api/v1/palettes/:id', async (request, response) => {
     await database('palettes').where('id', request.params.id).del()
 
     response.status(200).json(`The palette with id ${request.params.id} has been removed.`)
-  } 
+  } else {
+    return response.status(400).json({ error: `Could not find palette with id of ${request.params.id}` })
+  }
 });
 
 module.exports = app;
