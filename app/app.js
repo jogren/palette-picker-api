@@ -124,6 +124,16 @@ app.delete('/api/v1/projects/:id', async (request, response) => {
   } else {
     return response.status(400).json({ error: `Could not find project with id of ${request.params.id}` })
   }
-})
+});
+
+app.delete('/api/v1/palettes/:id', async (request, response) => {
+  const palette = await database('palettes').where('id', request.params.id).select();
+
+  if (palette.length) {
+    await database('palettes').where('id', request.params.id).del()
+
+    response.status(200).json(`The palette with id ${request.params.id} has been removed.`)
+  } 
+});
 
 module.exports = app;
