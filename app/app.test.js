@@ -242,5 +242,13 @@ describe('Server', () => {
       expect(res.body).toEqual(`The palette with id ${mockId} has been removed.`)
     });
 
+    it('should return a 400 and an error message', async () => {
+      const invalidId = -1;
+
+      const res = await request(app).delete(`/api/v1/palettes/${invalidId}`);
+
+      expect(res.status).toBe(400);
+      expect(res.body.error).toEqual('Could not find palette with id of -1')
+    });
   });
 });
