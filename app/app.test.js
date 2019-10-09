@@ -193,5 +193,20 @@ describe('Server', () => {
       expect(res.status).toBe(202);
       expect(expectedPalette[0].name).toEqual(updatedInfo.name)
     });
+
+    it('should return a 400 and an error message', async () => {
+      const updatedInfo = {
+        name: 'Fourth of July',
+        color2: '#1261A0',
+        color3: '#FF6347'
+      }
+
+      const invalidId = -1;
+
+      const res = await request(app).patch(`/api/v1/projects/${invalidId}`).send(updatedInfo);
+
+      expect(res.status).toBe(400);
+      expect(res.body.error).toEqual('Could not find project with id of -1')
+    });
   });
 });
