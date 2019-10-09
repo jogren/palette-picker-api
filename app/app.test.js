@@ -220,5 +220,14 @@ describe('Server', () => {
       expect(res.status).toBe(200);
       expect(res.body).toEqual(`The project with id ${mockId} and all of its palettes have been removed.`)
     });
+
+    it('should return a 400 and an error message', async () => {
+      const invalidId = -1;
+
+      const res = await request(app).delete(`/api/v1/projects/${invalidId}`);
+
+      expect(res.status).toBe(400);
+      expect(res.body.error).toEqual('Could not find project with id of -1')
+    });
   });
 });
