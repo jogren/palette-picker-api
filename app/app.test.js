@@ -133,13 +133,17 @@ describe('Server', () => {
 
   describe('POST /api/v1/palettes', () => {
     it('should return a 200 and add a new palette to the table', async () => {
+      const expectedProject = await database('projects').first();
+      const id = expectedProject.id;
+
       const newPalette = { 
-        name: 'Christmas Theme', 
+        name: 'Christmas Theme',
+        project_id: id, 
         color1: '#FFFFFF', 
         color2: '#FFFFFF',
         color3: '#FFFFFF',
         color4: '#FFFFFF',
-        color5: '#FFFFFF'
+        color5: '#FFFFFF',
       };
 
       const res = await request(app).post('/api/v1/palettes').send(newPalette);
@@ -152,8 +156,12 @@ describe('Server', () => {
     });
 
     it('should return a 422 and a message when missing parameter', async () => {
+      const expectedProject = await database('projects').first();
+      const id = expectedProject.id;
+
       const newPalette = {
         name: 'Christmas Theme',
+        project_id: id,
         color1: '#FFFFFF',
         color3: '#FFFFFF',
         color4: '#FFFFFF',
@@ -162,7 +170,7 @@ describe('Server', () => {
       const res = await request(app).post('/api/v1/palettes').send(newPalette);
 
       expect(res.status).toBe(422);
-      expect(res.body.error).toEqual('Expected format: { name: <string>, color1, <string>, color2, <string>, color3, <string>, color4, <string>, color5, <string>, }. You are missing a color2 property.')
+      expect(res.body.error).toEqual('Expected format: { name: <string>, color1: <string>, color2: <string>, color3: <string>, color4: <string>, color5: <string>, project_id: <integer> }. You are missing a color2 property.')
     });
   });
 

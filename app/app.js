@@ -77,11 +77,11 @@ app.post('/api/v1/projects', async (request, response) => {
 app.post('/api/v1/palettes', async (request, response) => {
   const palette = request.body;
 
-  for (let requiredParameter of ['name', 'color1', 'color2', 'color3', 'color4', 'color5',]) {
+  for (let requiredParameter of ['name', 'project_id', 'color1', 'color2', 'color3', 'color4', 'color5']) {
     if (!palette[requiredParameter]) {
       return response
         .status(422)
-        .send({ error: `Expected format: { name: <string>, color1, <string>, color2, <string>, color3, <string>, color4, <string>, color5, <string>, }. You are missing a ${requiredParameter} property.` })
+        .send({ error: `Expected format: { name: <string>, color1: <string>, color2: <string>, color3: <string>, color4: <string>, color5: <string>, project_id: <integer> }. You are missing a ${requiredParameter} property.` })
     }
   }
 
