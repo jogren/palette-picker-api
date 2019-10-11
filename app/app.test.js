@@ -71,10 +71,19 @@ describe('Server', () => {
       const paletteName = targetPalette.name;
 
       const res = await request(app).get(`/api/v1/palettes?name=${paletteName}`);
-      console.log(res.body)
 
       expect(res.status).toBe(200);
-      expect(res.body.name).toEqual(paletteName)
+      expect(JSON.stringify(res.body)).toEqual(JSON.stringify([targetPalette]))
+    })
+
+    it('should return a 200 and palette based on the query param provided', async () => {
+      const targetPalette = await database('palettes').first();
+      const projectId = targetPalette.project_id;
+
+      const res = await request(app).get(`/api/v1/palettes?project_id=${projectId}`);
+
+      expect(res.status).toBe(200);
+      expect(res.body.length).toEqual(2)
     })
 
     it('should return a 404 and an error message', async () => {
