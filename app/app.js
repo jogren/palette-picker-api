@@ -32,11 +32,18 @@ app.get('/api/v1/projects/:id', async (request, response) => {
 
 app.get('/api/v1/palettes', async (request, response) => {
   const palettes = await database('palettes').select();
-  const { name } = request.query;
+  const { name, project_id } = request.query;
   if (name) {
     const queriedPalette = await database('palettes').where('name', 'like', `%${name}%`).select();
     if (queriedPalette.length) {
-      return response.status(200).json(queriedPalette[0])
+      return response.status(200).json(queriedPalette)
+    } else {
+      return response.status(404).json({ error: 'That palette does not exist.' })
+    }
+  } else if (project_id) {
+    const queriedPalette = await database('palettes').where('project_id', project_id).select();
+    if (queriedPalette.length) {
+      return response.status(200).json(queriedPalette)
     } else {
       return response.status(404).json({ error: 'That palette does not exist.' })
     }
