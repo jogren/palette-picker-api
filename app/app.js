@@ -71,10 +71,15 @@ app.post('/api/v1/projects', async (request, response) => {
         .send({ error: `Expected format: { name: <string> }. You are missing a ${requiredParameter} property.` })
     } 
   }
+  const alreadyExists = await database('projects').where('name', project.name).select()
+  console.log(alreadyExists)
+  if (alreadyExists.length) {
+    return response.status(422).json({ error: `${project.name} already exists, please choose a new name.` })
+  }
 
   const insertedProject = await database('projects').insert(project, 'id');
 
-  if (insertedProject) {
+  if (!alreadyExists.length && insertedProject) {
     return response.status(201).json({ id: insertedProject[0] });
   } else {
     return response.status(422).json({ error: 'Failed to post project' })
