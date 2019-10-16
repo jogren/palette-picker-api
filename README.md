@@ -16,6 +16,8 @@ The API is deployed at: https://palette-picker-api-sfjo.herokuapp.com.
 
 ## Schema
 
+![image](https://user-images.githubusercontent.com/45364533/66959159-07fe2e00-f027-11e9-949d-917cbc79a5cd.png)
+
 ## API - Endpoints
 
 URL: https://palette-picker-api-sfjo.herokuapp.com
