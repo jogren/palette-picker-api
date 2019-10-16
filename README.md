@@ -43,3 +43,10 @@ URL: https://palette-picker-api-sfjo.herokuapp.com
 | Edit a specific palette   | `/api/v1/palettes/:id` | PATCH  | none                                                                                                                                                | `{"id": <Integer>}`                                                                                                                                                                                                                     |
 | Delete a specific project | `/api/v1/projects/:id` | DELETE | none                                                                                                                                                | `The project with id <Integer> and all of its palettes have been removed.`                                                                                                                                                              |
 | Delete a specific palette | `/api/v1/palettes/:id` | DELETE | none                                                                                                                                                | `The palette with id <Integer> has been removed.`                                                                                                                                                                                       |
+
+## Query Params
+
+| Purpose                                         |                   URL                   | Sample Success Response                                               |
+| ----------------------------------------------- | :-------------------------------------: | --------------------------------------------------------------------- |
+| Get all palettes that include the searched name |    `/api/v1/palettes?name=<String>`     | `{palettes: [array of palettes that include <String> in their name]}` |
+| Get all palettes for a specific project_id      | `/api/v1/palettes?project_id=<Integer>` | `{palettes: [array of palettes with project_id:<Integer>]}`           |
