@@ -4,6 +4,10 @@
 
 The palette picker api was built to store different projects in a one-to-many relationship. Users can organize palettes with a project_id that corresponds to a specific project. Each palette includes a unique name with 5 colors saved as strings. The API is deployed at: https://palette-picker-api-sfjo.herokuapp.com.
 
+## Front End Repo
+
+[Link to Front End Repo](https://github.com/jogren/palette-picker)
+
 ## Technology
 
 - Node.js
