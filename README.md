@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jogren/palette-picker-api.svg?branch=master)](https://travis-ci.org/jogren/palette-picker-api)
 
-The API is deployed at: https://palette-picker-api-sfjo.herokuapp.com.
+The palette picker api was built to store different projects with a one-to-many relationship. For each project the user can store a palette under each. Each palette includes a unique name with 5 colors saved as strings. The API is deployed at: https://palette-picker-api-sfjo.herokuapp.com.
 
 ## Technology
 
@@ -13,6 +13,15 @@ The API is deployed at: https://palette-picker-api-sfjo.herokuapp.com.
 - PostgreSQL
 
 ## Learning Goals
+
+- Solidify RESTful API design skills
+- Server-side testing
+- Further understanding of complete CRUD endpoints
+- Connecting BE & FE
+- Work with multiple environments:
+  - testing
+  - use of automatic continuous integration with TravisCI
+  - deployment with Heroku
 
 ## Schema
 
