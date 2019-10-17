@@ -72,7 +72,6 @@ app.post('/api/v1/projects', async (request, response) => {
     } 
   }
   const alreadyExists = await database('projects').where('name', project.name).select()
-  console.log(alreadyExists)
   if (alreadyExists.length) {
     return response.status(422).json({ error: `${project.name} already exists, please choose a new name.` })
   }
